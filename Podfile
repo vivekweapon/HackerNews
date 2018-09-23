@@ -18,9 +18,7 @@ target 'HackerNews' do
   end
 
   pod 'Firebase/Core'
-  pod 'FirebaseUI/Phone', '~> 5.0'
-  pod 'FirebaseUI/Google', '~> 5.0'
-  pod 'FirebaseUI/Auth'
+  pod 'Alamofire', '~> 4.7'
 
 
 

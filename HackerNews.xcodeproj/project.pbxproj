@@ -20,6 +20,11 @@
 		99069BFF2155115100DE49C2 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 99069BFE2155115100DE49C2 /* GoogleService-Info.plist */; };
 		99069C0121562F3800DE49C2 /* DetailHackerNewsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99069C0021562F3800DE49C2 /* DetailHackerNewsViewController.swift */; };
 		99069C0321562FAB00DE49C2 /* HackerNewsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99069C0221562FAB00DE49C2 /* HackerNewsCell.swift */; };
+		99069C07215685F200DE49C2 /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99069C06215685F200DE49C2 /* APIService.swift */; };
+		99069C0B2156862700DE49C2 /* News.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99069C082156862600DE49C2 /* News.swift */; };
+		99069C0D2156862700DE49C2 /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99069C0A2156862700DE49C2 /* Comment.swift */; };
+		99069C0F215689A300DE49C2 /* DateFormatterExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99069C0E215689A300DE49C2 /* DateFormatterExtension.swift */; };
+		99DD177621577E0A004A596D /* DetailNewsHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99DD177521577E0A004A596D /* DetailNewsHeaderView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,6 +66,11 @@
 		99069BFE2155115100DE49C2 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		99069C0021562F3800DE49C2 /* DetailHackerNewsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailHackerNewsViewController.swift; sourceTree = "<group>"; };
 		99069C0221562FAB00DE49C2 /* HackerNewsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HackerNewsCell.swift; sourceTree = "<group>"; };
+		99069C06215685F200DE49C2 /* APIService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIService.swift; sourceTree = "<group>"; };
+		99069C082156862600DE49C2 /* News.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = News.swift; sourceTree = "<group>"; };
+		99069C0A2156862700DE49C2 /* Comment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
+		99069C0E215689A300DE49C2 /* DateFormatterExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateFormatterExtension.swift; sourceTree = "<group>"; };
+		99DD177521577E0A004A596D /* DetailNewsHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailNewsHeaderView.swift; sourceTree = "<group>"; };
 		A379AA11EC87FD16FB55D4CE /* Pods-HackerNews.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HackerNews.release.xcconfig"; path = "Pods/Target Support Files/Pods-HackerNews/Pods-HackerNews.release.xcconfig"; sourceTree = "<group>"; };
 		B9128C5D4CEB3916D997C4AE /* Pods-HackerNewsUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HackerNewsUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-HackerNewsUITests/Pods-HackerNewsUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		D63D2AD9A75C8D667A2924A9 /* Pods-HackerNewsUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HackerNewsUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-HackerNewsUITests/Pods-HackerNewsUITests.release.xcconfig"; sourceTree = "<group>"; };
@@ -130,10 +140,12 @@
 		99069BCB2154DA8600DE49C2 /* HackerNews */ = {
 			isa = PBXGroup;
 			children = (
+				99DD1777215793F0004A596D /* Controller */,
+				99DD17742156E734004A596D /* Extension */,
+				99DD17732156E71A004A596D /* Views */,
+				99DD17722156E6E9004A596D /* Model */,
 				99069BCC2154DA8600DE49C2 /* AppDelegate.swift */,
-				99069BCE2154DA8600DE49C2 /* HackerNewsViewController.swift */,
-				99069C0221562FAB00DE49C2 /* HackerNewsCell.swift */,
-				99069C0021562F3800DE49C2 /* DetailHackerNewsViewController.swift */,
+				99069C06215685F200DE49C2 /* APIService.swift */,
 				99069BD02154DA8600DE49C2 /* Main.storyboard */,
 				99069BD32154DA8900DE49C2 /* Assets.xcassets */,
 				99069BD52154DA8900DE49C2 /* LaunchScreen.storyboard */,
@@ -159,6 +171,41 @@
 				99069BEE2154DA8900DE49C2 /* Info.plist */,
 			);
 			path = HackerNewsUITests;
+			sourceTree = "<group>";
+		};
+		99DD17722156E6E9004A596D /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				99069C0A2156862700DE49C2 /* Comment.swift */,
+				99069C082156862600DE49C2 /* News.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		99DD17732156E71A004A596D /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				99069C0221562FAB00DE49C2 /* HackerNewsCell.swift */,
+				99DD177521577E0A004A596D /* DetailNewsHeaderView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		99DD17742156E734004A596D /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				99069C0E215689A300DE49C2 /* DateFormatterExtension.swift */,
+			);
+			path = Extension;
+			sourceTree = "<group>";
+		};
+		99DD1777215793F0004A596D /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				99069BCE2154DA8600DE49C2 /* HackerNewsViewController.swift */,
+				99069C0021562F3800DE49C2 /* DetailHackerNewsViewController.swift */,
+			);
+			path = Controller;
 			sourceTree = "<group>";
 		};
 		BAAB145991BCAF907B8660A3 /* Pods */ = {
@@ -336,15 +383,13 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-HackerNews/Pods-HackerNews-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/GTMOAuth2/GTMOAuth2.framework",
-				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
+				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
 				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMOAuth2.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 			);
@@ -481,9 +526,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				99069BCF2154DA8600DE49C2 /* HackerNewsViewController.swift in Sources */,
+				99069C0F215689A300DE49C2 /* DateFormatterExtension.swift in Sources */,
+				99DD177621577E0A004A596D /* DetailNewsHeaderView.swift in Sources */,
 				99069C0121562F3800DE49C2 /* DetailHackerNewsViewController.swift in Sources */,
 				99069C0321562FAB00DE49C2 /* HackerNewsCell.swift in Sources */,
+				99069C0B2156862700DE49C2 /* News.swift in Sources */,
+				99069C07215685F200DE49C2 /* APIService.swift in Sources */,
 				99069BCD2154DA8600DE49C2 /* AppDelegate.swift in Sources */,
+				99069C0D2156862700DE49C2 /* Comment.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
