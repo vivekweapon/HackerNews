@@ -81,7 +81,7 @@ class HackerNewsViewController: UIViewController {
     }
     
     @objc func refreshHackerTable(pageNo:Int,limit:Int) {
-        API.sharedInstance.fetchNews(size: maxNumberOfNews, pageNo: self.pageNo) { (success, news) in
+        APIService.sharedInstance.fetchNews(size: maxNumberOfNews, pageNo: self.pageNo) { (success, news) in
             
             if(self.latestNews.count == 0){
                 self.latestNews.removeAll()
@@ -154,6 +154,7 @@ extension HackerNewsViewController:UITableViewDelegate,UITableViewDataSource {
         
         let detailViewController = DetailHackerNewsViewController()
         detailViewController.newsItem = self.latestNews[indexPath.row]
+        detailViewController.commentsIds = self.latestNews[indexPath.row].commentsIds
         self.navigationController?.pushViewController(detailViewController, animated: true)
         
     }

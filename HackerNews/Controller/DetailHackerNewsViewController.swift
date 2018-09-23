@@ -12,9 +12,11 @@ import UIKit
 class DetailHackerNewsViewController:UIViewController {
     
     var newsItem:News! = nil
+    var commentsIds : NSArray = []
+    var comments : [Comment] = []
     let detailNewsTableView:UITableView = {
        
-        let tableView = UITableView()
+        let tableView = UITableView(frame: CGRect.zero, style: .grouped)
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
         
@@ -23,11 +25,43 @@ class DetailHackerNewsViewController:UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        detailNewsTableView.rowHeight = UITableView.automaticDimension
+        detailNewsTableView.estimatedRowHeight = 85.0
         detailNewsTableView.delegate = self
         detailNewsTableView.dataSource = self 
         detailNewsTableView.register(DetailNewsHeaderView.self, forHeaderFooterViewReuseIdentifier: "DetailNewsHeder")
+        detailNewsTableView.register(HotNewsCommentCell.self, forCellReuseIdentifier: "CommentCell")
+        getComments()
         setUpVews()
         
+    }
+    
+    func getComments(){
+        APIService.sharedInstance.fetchComments(commentsIds: commentsIds as! [Int]) { (success, comments) in
+            
+            // Update array of news and interface
+            var flattenComments = [Any]()
+            for comment in comments {
+                flattenComments += comment.flattenedComments() as! Array<Any>
+            }
+            self.comments = flattenComments.compactMap { $0 } as! [Comment]
+            
+            self.detailNewsTableView.reloadData()
+            
+            if (!success) {
+                // Display error
+                let alertView: UIAlertController = UIAlertController.init(title: "Error fetching news",
+                                                                          message: "There was an error fetching the new Hacker News articles. Please make sure you're connected to the internet and try again.",
+                                                                          preferredStyle: .alert)
+                let dismissButton: UIAlertAction = UIAlertAction.init(title: "OK",
+                                                                      style: .default,
+                                                                      handler: nil)
+                alertView.addAction(dismissButton)
+                self.present(alertView, animated: true, completion: nil)
+            }
+            
+        }
+
     }
     
     func setUpVews(){
@@ -47,12 +81,13 @@ class DetailHackerNewsViewController:UIViewController {
 
 extension DetailHackerNewsViewController:UITableViewDelegate,UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return newsItem.commentsIds.count
+        return comments.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell()
-        cell.textLabel?.text = "gggggg"
+        let cell = detailNewsTableView.dequeueReusableCell(withIdentifier: "CommentCell", for: indexPath) as! HotNewsCommentCell
+        let comment = comments[indexPath.row]
+        cell.set(comment: comment)
         return cell
     }
     
@@ -65,7 +100,7 @@ extension DetailHackerNewsViewController:UITableViewDelegate,UITableViewDataSour
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 200
+        return 120
     }
     
     

@@ -1,5 +1,5 @@
 //
-//  API.swift
+//  APIService.swift
 //  HackerNews
 //
 //  Created by Vivekananda Cherukuri on 21/09/18.
@@ -11,10 +11,10 @@ import Alamofire
 
 let baseURLString = "https://hacker-news.firebaseio.com/v0/"
 
-class API: NSObject {
+class APIService: NSObject {
     
     // Singleton creation
-    static let sharedInstance = API()
+    static let sharedInstance = APIService()
     private override init() {} // Prevents outside calling of init
     
     // Fetch top stories
