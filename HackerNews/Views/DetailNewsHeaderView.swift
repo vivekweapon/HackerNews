@@ -83,7 +83,7 @@ class DetailNewsHeaderView:UITableViewHeaderFooterView {
     let saperator:UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.textColor = UIColor.black
+        label.textColor = UIColor.white
         label.textAlignment = .center
         label.font = UIFont(name: "HelveticaNeue", size: 14.0)
         label.text = "*"
@@ -143,7 +143,7 @@ class DetailNewsHeaderView:UITableViewHeaderFooterView {
         saperator.centerYAnchor.constraint(equalTo: timeStampLabel.centerYAnchor).isActive = true
         
         userNameLabel.leadingAnchor.constraint(equalTo: saperator.trailingAnchor, constant: 3).isActive = true
-        userNameLabel.topAnchor.constraint(equalTo: timeStampLabel.topAnchor).isActive = true
+        userNameLabel.centerYAnchor.constraint(equalTo: timeStampLabel.centerYAnchor).isActive = true
         
         let window = UIApplication.shared.keyWindow!
 
@@ -163,11 +163,18 @@ class DetailNewsHeaderView:UITableViewHeaderFooterView {
         
         topicTitle.text = news.title!
         
+        let dateFormatter = DateFormatter()
+        let timeString = dateFormatter.timeSince(from: news.time!, numericDates: true)
+        
+        timeStampLabel.text = timeString
+
+        
         if news.by != nil {
             self.userNameLabel.text = news.by!
         }
         
         self.urlLabel.text =  news.url?.absoluteString
+        commentsButton.setTitle("Comments(\(news.commentsIds.count))", for: .normal)
         
     }
 }

@@ -13,6 +13,7 @@ class News: NSObject {
     var title: String?
     var score: Int?
     var by:    String?
+    var time:  NSDate?
     var url:   URL?
     var commentsIds : NSArray = []
     var numberOfComments: Int? = 0
@@ -23,6 +24,12 @@ class News: NSObject {
         title    = json.value(forKey: "title") as? String
         score    = json.value(forKey: "score") as? Int
         by       = json.value(forKey: "by")    as? String
+        
+        if let timeString = json.value(forKey: "time") as? Int {
+            let date = NSDate(timeIntervalSince1970: TimeInterval(timeString))
+            time = date
+        }
+        
         if let urlString = json.value(forKey: "url") as? String {
             url = URL(string: urlString)
         } else {

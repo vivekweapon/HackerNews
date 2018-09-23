@@ -11,6 +11,8 @@ import UIKit
 
 class DetailHackerNewsViewController:UIViewController {
     
+    private let refreshControl = UIRefreshControl()
+
     var newsItem:News! = nil
     var commentsIds : NSArray = []
     var comments : [Comment] = []
@@ -24,7 +26,15 @@ class DetailHackerNewsViewController:UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        if #available(iOS 10.0, *) {
+            detailNewsTableView.refreshControl = refreshControl
+        } else {
+            detailNewsTableView.addSubview(refreshControl)
+        }
+        refreshControl.tintColor = UIColor(red:0.25, green:0.72, blue:0.85, alpha:1.0)
+        refreshControl.attributedTitle = NSAttributedString(string: "Fetching Comments ...", attributes: nil)
+       // detailNewsTableView.setContentOffset(CGPoint(x: 0, y: detailNewsTableView.contentOffset.y - 30), animated: false)
+        detailNewsTableView.refreshControl?.beginRefreshing()
         detailNewsTableView.rowHeight = UITableView.automaticDimension
         detailNewsTableView.estimatedRowHeight = 85.0
         detailNewsTableView.delegate = self
@@ -45,7 +55,7 @@ class DetailHackerNewsViewController:UIViewController {
                 flattenComments += comment.flattenedComments() as! Array<Any>
             }
             self.comments = flattenComments.compactMap { $0 } as! [Comment]
-            
+            self.refreshControl.endRefreshing()
             self.detailNewsTableView.reloadData()
             
             if (!success) {

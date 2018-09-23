@@ -131,8 +131,14 @@ class HackerNewsCell:UITableViewCell {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+  
     func set(news: News) {
         self.news = news
+        
+        let dateFormatter = DateFormatter()
+        let timeString = dateFormatter.timeSince(from: news.time!, numericDates: true)
+        
+        timeStampLabel.text = timeString
         
         topicTitle.text = news.title!
         numberOfCommentsLabel.text = String(describing: news.score!)

@@ -23,7 +23,6 @@ class HackerNewsViewController: UIViewController {
     
     var latestNews = [News]()
     private let refreshControl = UIRefreshControl()
-    private let bottomRefreshControl = UIRefreshControl()
 
     let hackerNewsTableView:UITableView = {
         let tableView = UITableView()
@@ -42,6 +41,8 @@ class HackerNewsViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         self.navigationItem.title = "Top Stories"
+        self.view.backgroundColor = UIColor.white
+        
         if #available(iOS 10.0, *) {
             hackerNewsTableView.refreshControl = refreshControl
         } else {
@@ -69,7 +70,7 @@ class HackerNewsViewController: UIViewController {
 
             }
         
-            self.refreshHackerTable(pageNo: 0, size: 30)
+            self.refreshHackerTable()
 
         }
         
@@ -96,41 +97,91 @@ class HackerNewsViewController: UIViewController {
         self.activityIndicator.widthAnchor.constraint(equalToConstant: 30).isActive = true
     }
     
-    @objc func refreshHackerTable(pageNo:Int,size:Int) {
-      
+    @objc func refreshHackerTable() {
         let realm = RealmService.shared.realm
         let array = realm.objects(NewsObject.self)
         
         var idArray:NSArray? = nil
         
-        var realArray = [Any]()
+        var realmArray = [Any]()
         
         for obj in array {
-            realArray.append(obj.id.value!)
+            realmArray.append(obj.id.value!)
         }
         
-        idArray = realArray as NSArray
+        idArray = realmArray as NSArray
         
         APIService.sharedInstance.getIndividualNews(newsIdArray: idArray!, size: 30, pageNo: self.pageNo) { (success, news) in
             
-            if(self.latestNews.count == 0){
-                self.latestNews.removeAll()
-                self.latestNews = news
-                self.hackerNewsTableView.reloadData()
-                self.refreshControl.endRefreshing()
-
+            
+            
+            var indexPathArray = [IndexPath]()
+            
+            for obj in news {
+                
+                let count = self.latestNews.count - 1
+                let indexPath = IndexPath(item: count + 1, section: 0)
+                indexPathArray.append(indexPath)
+                self.latestNews.append(obj)
+                
+                
             }
-            else{
-
+            
+            
+            self.hackerNewsTableView.beginUpdates()
+            self.hackerNewsTableView.insertRows(at: indexPathArray, with: .automatic)
+            self.hackerNewsTableView.endUpdates()
+            self.hackerNewsTableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+            self.activityIndicator.stopAnimating()
+            self.hackerNewsTableView.backgroundColor = UIColor.clear
+            
+            
+            
+            
+            
+            if (!success) {
+                // Display error
+                let alertView: UIAlertController = UIAlertController.init(title: "Error fetching news",
+                                                                          message: "HackerNews Error.",
+                                                                          preferredStyle: .alert)
+                let dismissButton: UIAlertAction = UIAlertAction.init(title: "OK",
+                                                                      style: .default,
+                                                                      handler: nil)
+                alertView.addAction(dismissButton)
+                self.present(alertView, animated: true, completion: nil)
+            }
+            
+        }
+  
+    }
+    
+    func getMoreNews(pageNo:Int,size:Int){
+        let realm = RealmService.shared.realm
+        let array = realm.objects(NewsObject.self)
+        
+        var idArray:NSArray? = nil
+        
+        var realmArray = [Any]()
+        
+        for obj in array {
+            realmArray.append(obj.id.value!)
+        }
+        
+        idArray = realmArray as NSArray
+        
+        APIService.sharedInstance.getIndividualNews(newsIdArray: idArray!, size: 30, pageNo: self.pageNo) { (success, news) in
+            
+         
+                
                 var indexPathArray = [IndexPath]()
                 
                 for obj in news {
-                   
+                    
                     let count = self.latestNews.count - 1
                     let indexPath = IndexPath(item: count + 1, section: 0)
                     indexPathArray.append(indexPath)
                     self.latestNews.append(obj)
-
+                    
                     
                 }
                 
@@ -141,15 +192,15 @@ class HackerNewsViewController: UIViewController {
                 self.hackerNewsTableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
                 self.activityIndicator.stopAnimating()
                 self.hackerNewsTableView.backgroundColor = UIColor.clear
-
-            }
-           
+                
+            
+            
             
             
             if (!success) {
                 // Display error
                 let alertView: UIAlertController = UIAlertController.init(title: "Error fetching news",
-                                                                          message: "There was an error fetching the new Hacker News articles. Please make sure you're connected to the internet and try again.",
+                                                                          message: "HackerNews Error.",
                                                                           preferredStyle: .alert)
                 let dismissButton: UIAlertAction = UIAlertAction.init(title: "OK",
                                                                       style: .default,
@@ -212,7 +263,8 @@ extension HackerNewsViewController:UIScrollViewDelegate {
                 self.offset=self.limit * self.pageNo
              
                 self.hackerNewsTableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 100, right: 0)
-                refreshHackerTable(pageNo: self.pageNo, size: maxNumberOfNews)
+                self.getMoreNews(pageNo:self.pageNo,size:30)
+
                 self.activityIndicator.startAnimating()
                 self.hackerNewsTableView.backgroundColor = UIColor.red
             }

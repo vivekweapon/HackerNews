@@ -21,7 +21,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate,GIDSignInDelegate {
         
         print("Successfully logged into Google", user)
         let vc = HackerNewsViewController()
-        self.window?.rootViewController = vc
+        let navCntrl = UINavigationController(rootViewController: vc)
+        self.window?.rootViewController = navCntrl
         self.window?.makeKeyAndVisible()
         
     }
