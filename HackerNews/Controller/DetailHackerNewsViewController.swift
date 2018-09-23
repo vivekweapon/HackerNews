@@ -100,7 +100,7 @@ extension DetailHackerNewsViewController:UITableViewDelegate,UITableViewDataSour
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 120
+        return 200
     }
     
     

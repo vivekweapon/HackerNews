@@ -44,6 +44,7 @@ class DetailNewsHeaderView:UITableViewHeaderFooterView {
         
     }()
     
+    
     let urlLabel:UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -90,6 +91,24 @@ class DetailNewsHeaderView:UITableViewHeaderFooterView {
         return label
     }()
     
+    let commentsButton:UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setTitle("Comments(50)", for: .normal)
+        button.setTitleColor(UIColor.white, for: .normal)
+
+        return button
+    }()
+    
+    let articleButton:UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setTitle("Article", for: .normal)
+        button.setTitleColor(UIColor.white, for: .normal)
+    
+        return button
+    }()
+    
     func setup(){
         addSubview(bgView)
         bgView.addSubview(topicTitle)
@@ -97,6 +116,8 @@ class DetailNewsHeaderView:UITableViewHeaderFooterView {
         bgView.addSubview(timeStampLabel)
         bgView.addSubview(saperator)
         bgView.addSubview(userNameLabel)
+        bgView.addSubview(articleButton)
+        bgView.addSubview(commentsButton)
         setupConstraints()
     }
     
@@ -123,7 +144,18 @@ class DetailNewsHeaderView:UITableViewHeaderFooterView {
         
         userNameLabel.leadingAnchor.constraint(equalTo: saperator.trailingAnchor, constant: 3).isActive = true
         userNameLabel.topAnchor.constraint(equalTo: timeStampLabel.topAnchor).isActive = true
-       
+        
+        let window = UIApplication.shared.keyWindow!
+
+        commentsButton.bottomAnchor.constraint(equalTo: bgView.bottomAnchor).isActive = true
+        commentsButton.topAnchor.constraint(equalTo: userNameLabel.bottomAnchor, constant:10).isActive = true
+        commentsButton.widthAnchor.constraint(equalToConstant: window.frame.size.width/2).isActive = true
+        commentsButton.leadingAnchor.constraint(equalTo: bgView.leadingAnchor).isActive = true
+        
+        articleButton.bottomAnchor.constraint(equalTo: bgView.bottomAnchor).isActive = true
+        articleButton.widthAnchor.constraint(equalToConstant: window.frame.size.width/2).isActive = true
+        articleButton.leadingAnchor.constraint(equalTo: commentsButton.trailingAnchor).isActive = true
+        articleButton.topAnchor.constraint(equalTo: commentsButton.topAnchor).isActive = true
         
     }
     
