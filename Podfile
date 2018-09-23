@@ -20,6 +20,8 @@ target 'HackerNews' do
   pod 'Firebase/Core'
   pod 'Alamofire', '~> 4.7'
   pod 'RealmSwift'
+  pod 'GoogleSignIn'
+
 
 
 

@@ -8,6 +8,7 @@
 
 import UIKit
 import Foundation
+import RealmSwift
 let maxNumberOfNews = 30
 
 class HackerNewsViewController: UIViewController {
@@ -52,18 +53,33 @@ class HackerNewsViewController: UIViewController {
         refreshControl.attributedTitle = NSAttributedString(string: "Fetching Data ...", attributes: nil)
         hackerNewsTableView.setContentOffset(CGPoint(x: 0, y: hackerNewsTableView.contentOffset.y - 30), animated: false)
         hackerNewsTableView.refreshControl?.beginRefreshing()
-        refreshHackerTable(pageNo: 0, limit: 30)
-      
         
+        let realm = RealmService.shared.realm
+        let array = realm.objects(NewsObject.self)
+        
+        for obj in array {
+            RealmService.shared.delete(obj)
+        }
+      
+        APIService.sharedInstance.fetchNews(size: 30, pageNo: 0) { (sucess, storiesArray) in
+            
+            for (_, news) in storiesArray.enumerated(){
+                let id = NewsObject(id: news as? Int)
+                RealmService.shared.create(id)
 
+            }
+        
+            self.refreshHackerTable(pageNo: 0, size: 30)
 
+        }
+        
         hackerNewsTableView.delegate = self
         hackerNewsTableView.dataSource = self
         hackerNewsTableView.backgroundColor = UIColor.clear
         hackerNewsTableView.register(HackerNewsCell.self, forCellReuseIdentifier: "HackerNewsCell")
         hackerNewsTableView.separatorStyle = .none
         self.view.addSubview(hackerNewsTableView)
-        hackerNewsTableView.addSubview(activityIndicator)
+        self.view.addSubview(activityIndicator)
         setUpConstraints()
       
     }
@@ -74,14 +90,28 @@ class HackerNewsViewController: UIViewController {
         self.hackerNewsTableView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor).isActive = true
         self.hackerNewsTableView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor).isActive = true
         
-        self.activityIndicator.centerXAnchor.constraint(equalTo: hackerNewsTableView.centerXAnchor).isActive = true
-        self.activityIndicator.bottomAnchor.constraint(equalTo: hackerNewsTableView.bottomAnchor, constant: 30).isActive = true
+        self.activityIndicator.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
+        self.activityIndicator.centerYAnchor.constraint(equalTo: self.view.centerYAnchor).isActive = true
         self.activityIndicator.heightAnchor.constraint(equalToConstant: 30).isActive = true
         self.activityIndicator.widthAnchor.constraint(equalToConstant: 30).isActive = true
     }
     
-    @objc func refreshHackerTable(pageNo:Int,limit:Int) {
-        APIService.sharedInstance.fetchNews(size: maxNumberOfNews, pageNo: self.pageNo) { (success, news) in
+    @objc func refreshHackerTable(pageNo:Int,size:Int) {
+      
+        let realm = RealmService.shared.realm
+        let array = realm.objects(NewsObject.self)
+        
+        var idArray:NSArray? = nil
+        
+        var realArray = [Any]()
+        
+        for obj in array {
+            realArray.append(obj.id.value!)
+        }
+        
+        idArray = realArray as NSArray
+        
+        APIService.sharedInstance.getIndividualNews(newsIdArray: idArray!, size: 30, pageNo: self.pageNo) { (success, news) in
             
             if(self.latestNews.count == 0){
                 self.latestNews.removeAll()
@@ -182,10 +212,9 @@ extension HackerNewsViewController:UIScrollViewDelegate {
                 self.offset=self.limit * self.pageNo
              
                 self.hackerNewsTableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 100, right: 0)
-                refreshHackerTable(pageNo: self.pageNo, limit: maxNumberOfNews)
+                refreshHackerTable(pageNo: self.pageNo, size: maxNumberOfNews)
                 self.activityIndicator.startAnimating()
                 self.hackerNewsTableView.backgroundColor = UIColor.red
-                
             }
         }
         

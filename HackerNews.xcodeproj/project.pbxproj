@@ -26,6 +26,9 @@
 		99069C0F215689A300DE49C2 /* DateFormatterExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99069C0E215689A300DE49C2 /* DateFormatterExtension.swift */; };
 		99DD177621577E0A004A596D /* DetailNewsHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99DD177521577E0A004A596D /* DetailNewsHeaderView.swift */; };
 		99DD177921579A94004A596D /* HotNewsCommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99DD177821579A94004A596D /* HotNewsCommentCell.swift */; };
+		99DD177B2157F4CE004A596D /* RealmService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99DD177A2157F4CD004A596D /* RealmService.swift */; };
+		99DD177D21580025004A596D /* NewsObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99DD177C21580025004A596D /* NewsObject.swift */; };
+		99DD177F21582BBD004A596D /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99DD177E21582BBD004A596D /* LoginViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -73,6 +76,9 @@
 		99069C0E215689A300DE49C2 /* DateFormatterExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateFormatterExtension.swift; sourceTree = "<group>"; };
 		99DD177521577E0A004A596D /* DetailNewsHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailNewsHeaderView.swift; sourceTree = "<group>"; };
 		99DD177821579A94004A596D /* HotNewsCommentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotNewsCommentCell.swift; sourceTree = "<group>"; };
+		99DD177A2157F4CD004A596D /* RealmService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmService.swift; sourceTree = "<group>"; };
+		99DD177C21580025004A596D /* NewsObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsObject.swift; sourceTree = "<group>"; };
+		99DD177E21582BBD004A596D /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		A379AA11EC87FD16FB55D4CE /* Pods-HackerNews.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HackerNews.release.xcconfig"; path = "Pods/Target Support Files/Pods-HackerNews/Pods-HackerNews.release.xcconfig"; sourceTree = "<group>"; };
 		B9128C5D4CEB3916D997C4AE /* Pods-HackerNewsUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HackerNewsUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-HackerNewsUITests/Pods-HackerNewsUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		D63D2AD9A75C8D667A2924A9 /* Pods-HackerNewsUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HackerNewsUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-HackerNewsUITests/Pods-HackerNewsUITests.release.xcconfig"; sourceTree = "<group>"; };
@@ -148,6 +154,8 @@
 				99DD17722156E6E9004A596D /* Model */,
 				99069BCC2154DA8600DE49C2 /* AppDelegate.swift */,
 				99069C06215685F200DE49C2 /* APIService.swift */,
+				99DD177A2157F4CD004A596D /* RealmService.swift */,
+				99DD177C21580025004A596D /* NewsObject.swift */,
 				99069BD02154DA8600DE49C2 /* Main.storyboard */,
 				99069BD32154DA8900DE49C2 /* Assets.xcassets */,
 				99069BD52154DA8900DE49C2 /* LaunchScreen.storyboard */,
@@ -207,6 +215,7 @@
 			children = (
 				99069BCE2154DA8600DE49C2 /* HackerNewsViewController.swift */,
 				99069C0021562F3800DE49C2 /* DetailHackerNewsViewController.swift */,
+				99DD177E21582BBD004A596D /* LoginViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -387,13 +396,21 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-HackerNews/Pods-HackerNews-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/GTMOAuth2/GTMOAuth2.framework",
+				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
+				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
+				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMOAuth2.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -423,16 +440,10 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-HackerNews/Pods-HackerNews-resources.sh",
-				"${PODS_CONFIGURATION_BUILD_DIR}/FirebaseUI/FirebaseAuthUI.bundle",
-				"${PODS_CONFIGURATION_BUILD_DIR}/FirebaseUI/FirebaseGoogleAuthUI.bundle",
-				"${PODS_CONFIGURATION_BUILD_DIR}/FirebaseUI/FirebasePhoneAuthUI.bundle",
 				"${PODS_ROOT}/GoogleSignIn/Resources/GoogleSignIn.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/FirebaseAuthUI.bundle",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/FirebaseGoogleAuthUI.bundle",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/FirebasePhoneAuthUI.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleSignIn.bundle",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -529,7 +540,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				99069BCF2154DA8600DE49C2 /* HackerNewsViewController.swift in Sources */,
+				99DD177B2157F4CE004A596D /* RealmService.swift in Sources */,
 				99069C0F215689A300DE49C2 /* DateFormatterExtension.swift in Sources */,
+				99DD177D21580025004A596D /* NewsObject.swift in Sources */,
 				99DD177621577E0A004A596D /* DetailNewsHeaderView.swift in Sources */,
 				99069C0121562F3800DE49C2 /* DetailHackerNewsViewController.swift in Sources */,
 				99DD177921579A94004A596D /* HotNewsCommentCell.swift in Sources */,
@@ -537,6 +550,7 @@
 				99069C0B2156862700DE49C2 /* News.swift in Sources */,
 				99069C07215685F200DE49C2 /* APIService.swift in Sources */,
 				99069BCD2154DA8600DE49C2 /* AppDelegate.swift in Sources */,
+				99DD177F21582BBD004A596D /* LoginViewController.swift in Sources */,
 				99069C0D2156862700DE49C2 /* Comment.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

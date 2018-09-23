@@ -18,39 +18,40 @@ class APIService: NSObject {
     private override init() {} // Prevents outside calling of init
     
     // Fetch top stories
-    public func fetchNews(size: Int, pageNo:Int,completionHandler: @escaping (Bool, [News]) -> Void) {
+    public func fetchNews(size: Int, pageNo:Int,completionHandler: @escaping (Bool, NSArray) -> Void) {
         
         Alamofire.request(baseURLString + "topstories.json").responseJSON { response in
-            if var topstoriesJSON = response.result.value as? NSArray {
-                let numberOfNews = topstoriesJSON.count > size ? size : topstoriesJSON.count
-                topstoriesJSON = topstoriesJSON.subarray(with: NSRange(location: pageNo + size, length: numberOfNews)) as NSArray
+            if let topstoriesJSON = response.result.value as? NSArray {
                 
-                var returnNews : [News] = []
-                
-                let newsGroup = DispatchGroup()
-                for (_, news) in topstoriesJSON.enumerated() {
-                    newsGroup.enter()
-                    
-                    Alamofire.request(baseURLString + "item/\(news).json").responseJSON { response in
-                        if let newsJSON = response.result.value as? NSDictionary {
-                            let newsObject = News.init(json: newsJSON)
-                            returnNews.append(newsObject)
-                        }
-                        newsGroup.leave()
-                    }
-                }
-                
-                newsGroup.notify(queue: .main) {
-                    returnNews.sort {a, b in
-                        topstoriesJSON.index(of: a.id!) < topstoriesJSON.index(of: b.id!)
-                    }
-                    
-                    completionHandler(true, returnNews)
-                }
-                
+               completionHandler(true,topstoriesJSON)
             } else {
                 completionHandler(false, [])
             }
+        }
+    }
+    
+    func getIndividualNews(newsIdArray:NSArray,size:Int,pageNo:Int,completionHandler: @escaping (Bool, [News]) -> Void){
+       
+        let newsGroup = DispatchGroup()
+        var returnNews : [News] = []
+        let numberOfNews = newsIdArray.count > size ? size : newsIdArray.count
+        let subArrayNews = newsIdArray.subarray(with: NSRange(location: pageNo * size, length: numberOfNews)) as NSArray
+        
+        for news in subArrayNews {
+            newsGroup.enter()
+            
+            Alamofire.request(baseURLString + "item/\(news).json").responseJSON { response in
+                if let newsJSON = response.result.value as? NSDictionary {
+                    let newsObject = News.init(json: newsJSON)
+                    returnNews.append(newsObject)
+                }
+                newsGroup.leave()
+            }
+        }
+        
+        newsGroup.notify(queue: .main) {
+            
+            completionHandler(true, returnNews)
         }
     }
     
