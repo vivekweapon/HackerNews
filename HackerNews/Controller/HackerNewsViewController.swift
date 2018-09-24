@@ -68,6 +68,7 @@ class HackerNewsViewController: UIViewController {
         //fetch hot news when view is loaded
         activityIndicator.startAnimating()
         APIService.sharedInstance.fetchNews(size: 30, pageNo: 0) { (sucess, storiesArray) in
+            //saving stories to real database
             for (_, news) in storiesArray.enumerated(){
                 let id = NewsObject(id: news )
                 RealmService.shared.create(id)
