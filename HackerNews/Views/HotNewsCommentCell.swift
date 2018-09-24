@@ -62,6 +62,7 @@ class HotNewsCommentCell:UITableViewCell {
         return label
     }()
     
+    //set commentcell with comment object
     func set(comment: Comment) {
         
         let dateFormatter = DateFormatter()
@@ -72,7 +73,6 @@ class HotNewsCommentCell:UITableViewCell {
             userLable.text  = user
         }
         if let comment = comment.text {
-           // commentLabel.//
             commentLabel.attributedText = comment.htmlAttributedString
         }
     }

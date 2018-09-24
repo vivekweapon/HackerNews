@@ -148,14 +148,12 @@
 		99069BCB2154DA8600DE49C2 /* HackerNews */ = {
 			isa = PBXGroup;
 			children = (
+				99DD17812158CFA7004A596D /* Serivces */,
 				99DD1777215793F0004A596D /* Controller */,
 				99DD17742156E734004A596D /* Extension */,
 				99DD17732156E71A004A596D /* Views */,
 				99DD17722156E6E9004A596D /* Model */,
 				99069BCC2154DA8600DE49C2 /* AppDelegate.swift */,
-				99069C06215685F200DE49C2 /* APIService.swift */,
-				99DD177A2157F4CD004A596D /* RealmService.swift */,
-				99DD177C21580025004A596D /* NewsObject.swift */,
 				99069BD02154DA8600DE49C2 /* Main.storyboard */,
 				99069BD32154DA8900DE49C2 /* Assets.xcassets */,
 				99069BD52154DA8900DE49C2 /* LaunchScreen.storyboard */,
@@ -186,6 +184,7 @@
 		99DD17722156E6E9004A596D /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				99DD177C21580025004A596D /* NewsObject.swift */,
 				99069C0A2156862700DE49C2 /* Comment.swift */,
 				99069C082156862600DE49C2 /* News.swift */,
 			);
@@ -218,6 +217,15 @@
 				99DD177E21582BBD004A596D /* LoginViewController.swift */,
 			);
 			path = Controller;
+			sourceTree = "<group>";
+		};
+		99DD17812158CFA7004A596D /* Serivces */ = {
+			isa = PBXGroup;
+			children = (
+				99069C06215685F200DE49C2 /* APIService.swift */,
+				99DD177A2157F4CD004A596D /* RealmService.swift */,
+			);
+			path = Serivces;
 			sourceTree = "<group>";
 		};
 		BAAB145991BCAF907B8660A3 /* Pods */ = {

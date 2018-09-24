@@ -132,6 +132,7 @@ class HackerNewsCell:UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
   
+    //setup cell with news object
     func set(news: News) {
         self.news = news
         
@@ -141,7 +142,7 @@ class HackerNewsCell:UITableViewCell {
         timeStampLabel.text = timeString
         
         topicTitle.text = news.title!
-        numberOfCommentsLabel.text = String(describing: news.score!)
+        numberOfCommentsLabel.text = String(describing: news.commentsIds.count)
         
         if news.by != nil {
             self.userNameLabel.text = news.by!

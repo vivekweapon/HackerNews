@@ -159,6 +159,7 @@ class DetailNewsHeaderView:UITableViewHeaderFooterView {
         
     }
     
+    //setup header with news object
     func set(news: News) {
         
         topicTitle.text = news.title!

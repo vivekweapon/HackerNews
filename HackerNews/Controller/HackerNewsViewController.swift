@@ -98,6 +98,7 @@ class HackerNewsViewController: UIViewController {
         self.activityIndicator.widthAnchor.constraint(equalToConstant: 30).isActive = true
     }
     
+    //refresh while draging tableview from top
     @objc func refreshHackerTable(){
         
         
@@ -175,8 +176,9 @@ class HackerNewsViewController: UIViewController {
     }
     
     
-    
-       func fetchHackerNews() {
+    //Initial fetch for HackerNews.
+        func fetchHackerNews() {
+       
         let realm = RealmService.shared.realm
         let array = realm.objects(NewsObject.self)
         
@@ -234,7 +236,9 @@ class HackerNewsViewController: UIViewController {
   
     }
     
+    //Getmore hackernes whileswiping up for more news.
     func getMoreNews(pageNo:Int,size:Int){
+        
         let realm = RealmService.shared.realm
         let array = realm.objects(NewsObject.self)
         

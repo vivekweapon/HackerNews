@@ -33,7 +33,6 @@ class DetailHackerNewsViewController:UIViewController {
         }
         refreshControl.tintColor = UIColor(red:0.25, green:0.72, blue:0.85, alpha:1.0)
         refreshControl.attributedTitle = NSAttributedString(string: "Fetching Comments ...", attributes: nil)
-       // detailNewsTableView.setContentOffset(CGPoint(x: 0, y: detailNewsTableView.contentOffset.y - 30), animated: false)
         detailNewsTableView.refreshControl?.beginRefreshing()
         detailNewsTableView.rowHeight = UITableView.automaticDimension
         detailNewsTableView.estimatedRowHeight = 85.0
@@ -46,10 +45,11 @@ class DetailHackerNewsViewController:UIViewController {
         
     }
     
+    //Fetching Comments
     func getComments(){
         APIService.sharedInstance.fetchComments(commentsIds: commentsIds as! [Int]) { (success, comments) in
             
-            // Update array of news and interface
+        
             var flattenComments = [Any]()
             for comment in comments {
                 flattenComments += comment.flattenedComments() as! Array<Any>
@@ -61,7 +61,7 @@ class DetailHackerNewsViewController:UIViewController {
             if (!success) {
                 // Display error
                 let alertView: UIAlertController = UIAlertController.init(title: "Error fetching news",
-                                                                          message: "There was an error fetching the new Hacker News articles. Please make sure you're connected to the internet and try again.",
+                                                                          message: "HackerNews Error.",
                                                                           preferredStyle: .alert)
                 let dismissButton: UIAlertAction = UIAlertAction.init(title: "OK",
                                                                       style: .default,
