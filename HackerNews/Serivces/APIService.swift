@@ -13,9 +13,9 @@ let baseURLString = "https://hacker-news.firebaseio.com/v0/"
 
 class APIService: NSObject {
     
-    // Singleton creation
+   
     static let sharedInstance = APIService()
-    private override init() {} // Prevents outside calling of init
+    private override init() {}
     
     // Fetch top stories
     public func fetchNews(size: Int, pageNo:Int,completionHandler: @escaping (Bool, [Int]) -> Void) {
@@ -30,6 +30,7 @@ class APIService: NSObject {
         }
     }
     
+    //fetch Individual Stories
     func getIndividualNews(newsIdArray:NSArray,size:Int,pageNo:Int,completionHandler: @escaping (Bool, [News]) -> Void){
        
         let newsGroup = DispatchGroup()
