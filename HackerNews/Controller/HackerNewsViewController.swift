@@ -158,7 +158,7 @@ class HackerNewsViewController: UIViewController {
                     for obj in news {
                         let indexPath = IndexPath(item: i, section: 0)
                         indexPathArray.append(indexPath)
-                        self.latestNews.append(obj)
+                        self.latestNews.insert(obj, at: i)
                         i += 1
                     }
                     
@@ -302,9 +302,7 @@ extension HackerNewsViewController:UITableViewDelegate,UITableViewDataSource {
 }
 extension HackerNewsViewController:UIScrollViewDelegate {
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-        
         isDataLoading = false
-        
     }
     
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
@@ -313,9 +311,7 @@ extension HackerNewsViewController:UIScrollViewDelegate {
     //Pagination
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         
-        if(hackerNewsTableView.contentOffset.y < -100){
-           // refreshControl.beginRefreshing()
-        }
+        
         if ((hackerNewsTableView.contentOffset.y + hackerNewsTableView.frame.size.height) >= hackerNewsTableView.contentSize.height + 100)
         {
             if !isDataLoading{
