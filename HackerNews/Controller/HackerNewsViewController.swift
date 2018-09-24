@@ -150,6 +150,7 @@ class HackerNewsViewController: UIViewController {
                 return
             } else {
                 
+                //saving new unique stories to real database.
                 for (_, news) in uniqueStoriesArray.enumerated(){
                     let id = NewsObject(id: news )
                     RealmService.shared.create(id)
