@@ -137,6 +137,12 @@ class HackerNewsViewController: UIViewController {
             
             //get unique id that are not present in realm database.
             let uniqueStoriesArray = Array(Set(realmArray).subtracting(Set(storiesArray)))
+            if(self.isDataLoading == true){
+                self.hackerNewsTableView.contentInset = UIEdgeInsets(top: 0, left:0, bottom: 100, right: 0)
+            }else {
+                self.hackerNewsTableView.contentInset = UIEdgeInsets(top: 0, left:0, bottom: 0, right: 0)
+
+            }
 
             //if no unique items dont make api call.
             if(uniqueStoriesArray.count == 0){
