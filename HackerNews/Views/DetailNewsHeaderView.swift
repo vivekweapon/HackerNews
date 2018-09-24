@@ -143,7 +143,7 @@ class DetailNewsHeaderView:UITableViewHeaderFooterView {
         saperator.centerYAnchor.constraint(equalTo: timeStampLabel.centerYAnchor).isActive = true
         
         userNameLabel.leadingAnchor.constraint(equalTo: saperator.trailingAnchor, constant: 3).isActive = true
-        userNameLabel.centerYAnchor.constraint(equalTo: timeStampLabel.centerYAnchor).isActive = true
+        userNameLabel.centerYAnchor.constraint(equalTo: saperator.centerYAnchor).isActive = true
         
         let window = UIApplication.shared.keyWindow!
 
@@ -164,10 +164,8 @@ class DetailNewsHeaderView:UITableViewHeaderFooterView {
         
         let dateFormatter = DateFormatter()
         let timeString = dateFormatter.timeSince(from: news.time!, numericDates: true)
-        
         timeStampLabel.text = timeString
 
-        
         if news.by != nil {
             self.userNameLabel.text = news.by!
         }

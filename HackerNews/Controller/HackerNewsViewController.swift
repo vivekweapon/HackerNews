@@ -136,7 +136,7 @@ class HackerNewsViewController: UIViewController {
             }
             
             
-            let uniqueStoriesArray = Array(Set(storiesArray).subtracting(Set(realmArray)))
+            let uniqueStoriesArray = Array(Set(realmArray).subtracting(Set(storiesArray)))
 
             self.hackerNewsTableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
 
@@ -146,6 +146,8 @@ class HackerNewsViewController: UIViewController {
             }
             
             else {
+                print(realmArray)
+                print(uniqueStoriesArray)
                
                 //make an api call and get data only for unique ids present in result array.
                 APIService.sharedInstance.getIndividualNews(newsIdArray: uniqueStoriesArray as NSArray, size: uniqueStoriesArray.count, pageNo:0) { (success, news) in

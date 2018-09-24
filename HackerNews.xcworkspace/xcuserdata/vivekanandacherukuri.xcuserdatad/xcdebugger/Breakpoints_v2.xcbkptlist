@@ -2,4 +2,70 @@
 <Bucket
    type = "0"
    version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "HackerNews/Controller/HackerNewsViewController.swift"
+            timestampString = "559471693.985902"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "153"
+            endingLineNumber = "153"
+            landmarkName = "refreshHackerTable()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Bool, Swift.Array&lt;Swift.Int&gt;) -&gt; () in HackerNews.HackerNewsViewController.refreshHackerTable() -&gt; ()"
+                  moduleName = "HackerNews"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/vivekanandacherukuri/Desktop/HackerNews/HackerNews/Controller/HackerNewsViewController.swift"
+                  timestampString = "559471694.26397"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "153"
+                  endingLineNumber = "153"
+                  offsetFromSymbolStart = "1724">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Bool, Swift.Array&lt;HackerNews.News&gt;) -&gt; () in closure #1 (Swift.Bool, Swift.Array&lt;Swift.Int&gt;) -&gt; () in HackerNews.HackerNewsViewController.refreshHackerTable() -&gt; ()"
+                  moduleName = "HackerNews"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/vivekanandacherukuri/Desktop/HackerNews/HackerNews/Controller/HackerNewsViewController.swift"
+                  timestampString = "559471694.269618"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "155"
+                  endingLineNumber = "155"
+                  offsetFromSymbolStart = "68">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "HackerNews/Controller/HackerNewsViewController.swift"
+            timestampString = "559471693.986614"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "149"
+            endingLineNumber = "149"
+            landmarkName = "refreshHackerTable()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
 </Bucket>
