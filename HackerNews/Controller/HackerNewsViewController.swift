@@ -101,7 +101,19 @@ class HackerNewsViewController: UIViewController {
     //refresh while draging tableview from top
     @objc func refreshHackerTable(){
         
+        let currentDateTime = Date()
         
+        // initialize the date formatter and set the style
+        let formatter = DateFormatter()
+        formatter.timeStyle = .short
+        formatter.dateStyle = .short
+        
+        // get the date time String from the date object
+        formatter.string(from: currentDateTime)
+        let dateButton : UIBarButtonItem = UIBarButtonItem(title: formatter.string(from: currentDateTime), style: UIBarButtonItem.Style.plain, target: self, action: Selector(""))
+
+        self.navigationItem.rightBarButtonItem = dateButton
+
         hackerNewsTableView.setContentOffset(CGPoint(x: 0, y: hackerNewsTableView.contentOffset.y - 30), animated: false)
 
         APIService.sharedInstance.fetchNews(size: 30, pageNo: 0) { (sucess, storiesArray) in
