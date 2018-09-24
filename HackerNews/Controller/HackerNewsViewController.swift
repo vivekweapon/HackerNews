@@ -100,6 +100,7 @@ class HackerNewsViewController: UIViewController {
         self.activityIndicator.widthAnchor.constraint(equalToConstant: 30).isActive = true
     }
     
+    //MARK:API CALLS
     //refresh while draging tableview from top
     @objc func refreshHackerTable(){
         
@@ -148,6 +149,11 @@ class HackerNewsViewController: UIViewController {
             if(uniqueStoriesArray.count == 0){
                 return
             } else {
+                
+                for (_, news) in uniqueStoriesArray.enumerated(){
+                    let id = NewsObject(id: news )
+                    RealmService.shared.create(id)
+                }
                
                 //make an api call and get data only for unique ids present in result array.
                 APIService.sharedInstance.getIndividualNews(newsIdArray: uniqueStoriesArray as NSArray, size: uniqueStoriesArray.count, pageNo:0) { (success, news) in
@@ -241,10 +247,10 @@ class HackerNewsViewController: UIViewController {
             if (!success) {
                self.displayAlert()
             }
-            
         }
     }
     
+    //MARK:UTILITIES
     func displayAlert(){
         // Display error
         let alertView: UIAlertController = UIAlertController.init(title: "Error fetching news",

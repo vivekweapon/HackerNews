@@ -45,7 +45,7 @@ class DetailHackerNewsViewController:UIViewController {
         
     }
     
-    //Fetching Comments
+    //MARK:Fetching Comments
     func getComments(){
         APIService.sharedInstance.fetchComments(commentsIds: commentsIds as! [Int]) { (success, comments) in
             
@@ -74,6 +74,7 @@ class DetailHackerNewsViewController:UIViewController {
 
     }
     
+    //MARK:SETUP
     func setUpVews(){
         self.view.addSubview(detailNewsTableView)
         setUpConstraints()
