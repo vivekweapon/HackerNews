@@ -127,7 +127,7 @@ class HackerNewsViewController: UIViewController {
             }
             
             let realm = RealmService.shared.realm//realm object.
-            let array = realm.objects(NewsObject.self)//objects synced using already using realm.
+            let array = realm.objects(NewsObject.self)//objects synced already using realm.
 
             var realmArray = [Int]()
             
@@ -135,19 +135,13 @@ class HackerNewsViewController: UIViewController {
                 realmArray.append(obj.id.value!)
             }
             
-            
+            //get unique id that are not present in realm database.
             let uniqueStoriesArray = Array(Set(realmArray).subtracting(Set(storiesArray)))
 
-            self.hackerNewsTableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-
+            //if no unique items dont make api call.
             if(uniqueStoriesArray.count == 0){
                 return
-                
-            }
-            
-            else {
-                print(realmArray)
-                print(uniqueStoriesArray)
+            } else {
                
                 //make an api call and get data only for unique ids present in result array.
                 APIService.sharedInstance.getIndividualNews(newsIdArray: uniqueStoriesArray as NSArray, size: uniqueStoriesArray.count, pageNo:0) { (success, news) in
@@ -160,7 +154,6 @@ class HackerNewsViewController: UIViewController {
                         indexPathArray.append(indexPath)
                         self.latestNews.append(obj)
                         i += 1
-                        
                     }
                     
                     self.hackerNewsTableView.beginUpdates()
@@ -183,18 +176,9 @@ class HackerNewsViewController: UIViewController {
     //Initial fetch for HackerNews.
         func fetchHackerNews() {
        
-        let realm = RealmService.shared.realm
-        let array = realm.objects(NewsObject.self)
-        var idArray:NSArray? = nil
-        var realmArray = [Any]()
-        
-        for obj in array {
-            realmArray.append(obj.id.value!)
-        }
-        
-        idArray = realmArray as NSArray
-        
-        APIService.sharedInstance.getIndividualNews(newsIdArray: idArray!, size: 30, pageNo: self.pageNo) { (success, news) in
+        let idArray = getSavedIds()
+
+            APIService.sharedInstance.getIndividualNews(newsIdArray: idArray, size: 30, pageNo: self.pageNo) { (success, news) in
             
             var indexPathArray = [IndexPath]()
             
@@ -225,20 +209,9 @@ class HackerNewsViewController: UIViewController {
     //Getmore hackernes whileswiping up for more news.
     func getMoreNews(pageNo:Int,size:Int){
         
-        let realm = RealmService.shared.realm
-        let array = realm.objects(NewsObject.self)
-        
-        var idArray:NSArray? = nil
-        
-        var realmArray = [Any]()
-        
-        for obj in array {
-            realmArray.append(obj.id.value!)
-        }
-        
-        idArray = realmArray as NSArray
-        
-        APIService.sharedInstance.getIndividualNews(newsIdArray: idArray!, size: 30, pageNo: self.pageNo) { (success, news) in
+        let idArray = getSavedIds()
+
+        APIService.sharedInstance.getIndividualNews(newsIdArray: idArray, size: 30, pageNo: self.pageNo) { (success, news) in
             
                 var indexPathArray = [IndexPath]()
                 
@@ -275,6 +248,20 @@ class HackerNewsViewController: UIViewController {
                                                               handler: nil)
         alertView.addAction(dismissButton)
         self.present(alertView, animated: true, completion: nil)
+    }
+    
+    func getSavedIds()->NSArray {
+        let realm = RealmService.shared.realm
+        let array = realm.objects(NewsObject.self)
+        
+        
+        var realmArray = [Any]()
+        
+        for obj in array {
+            realmArray.append(obj.id.value!)
+        }
+        
+        return realmArray as NSArray
     }
 
 }
@@ -336,8 +323,6 @@ extension HackerNewsViewController:UIScrollViewDelegate {
                 self.hackerNewsTableView.backgroundColor = UIColor.red
             }
         }
-        
-        
     }
 }
 
