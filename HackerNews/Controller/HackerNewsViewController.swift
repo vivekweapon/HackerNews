@@ -52,6 +52,7 @@ class HackerNewsViewController: UIViewController {
         }
        
         refreshControl.addTarget(self, action: #selector(refreshHackerTable), for: .valueChanged)
+    
         refreshControl.tintColor = UIColor(red:0.25, green:0.72, blue:0.85, alpha:1.0)
         refreshControl.attributedTitle = NSAttributedString(string: "Fetching Data ...", attributes: nil)
         hackerNewsTableView.setContentOffset(CGPoint(x: 0, y: hackerNewsTableView.contentOffset.y - 30), animated: false)
@@ -303,9 +304,12 @@ extension HackerNewsViewController:UIScrollViewDelegate {
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         
         print("scrollViewWillBeginDragging")
-        refreshControl.beginRefreshing()
-        self.refreshHackerTable()
+        print(hackerNewsTableView.contentInset)
+        print(hackerNewsTableView.contentOffset)
+        
+       
         isDataLoading = false
+        
     }
     
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
@@ -315,6 +319,12 @@ extension HackerNewsViewController:UIScrollViewDelegate {
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         
         print("scrollViewDidEndDragging")
+        print("gggg:\(hackerNewsTableView.contentOffset)")
+        
+        if(hackerNewsTableView.contentOffset.y < -100){
+            refreshControl.beginRefreshing()
+            self.refreshHackerTable()
+        }
         if ((hackerNewsTableView.contentOffset.y + hackerNewsTableView.frame.size.height) >= hackerNewsTableView.contentSize.height + 100)
         {
             if !isDataLoading{
