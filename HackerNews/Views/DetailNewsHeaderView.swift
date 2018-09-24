@@ -148,14 +148,12 @@ class DetailNewsHeaderView:UITableViewHeaderFooterView {
         let window = UIApplication.shared.keyWindow!
 
         commentsButton.bottomAnchor.constraint(equalTo: bgView.bottomAnchor).isActive = true
-        commentsButton.topAnchor.constraint(equalTo: userNameLabel.bottomAnchor, constant:10).isActive = true
         commentsButton.widthAnchor.constraint(equalToConstant: window.frame.size.width/2).isActive = true
         commentsButton.leadingAnchor.constraint(equalTo: bgView.leadingAnchor).isActive = true
         
         articleButton.bottomAnchor.constraint(equalTo: bgView.bottomAnchor).isActive = true
         articleButton.widthAnchor.constraint(equalToConstant: window.frame.size.width/2).isActive = true
         articleButton.leadingAnchor.constraint(equalTo: commentsButton.trailingAnchor).isActive = true
-        articleButton.topAnchor.constraint(equalTo: commentsButton.topAnchor).isActive = true
         
     }
     
