@@ -18,10 +18,10 @@ class APIService: NSObject {
     private override init() {} // Prevents outside calling of init
     
     // Fetch top stories
-    public func fetchNews(size: Int, pageNo:Int,completionHandler: @escaping (Bool, NSArray) -> Void) {
+    public func fetchNews(size: Int, pageNo:Int,completionHandler: @escaping (Bool, [Int]) -> Void) {
         
         Alamofire.request(baseURLString + "topstories.json").responseJSON { response in
-            if let topstoriesJSON = response.result.value as? NSArray {
+            if let topstoriesJSON = response.result.value as? [Int] {
                 
                completionHandler(true,topstoriesJSON)
             } else {

@@ -9,13 +9,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "HackerNews/APIService.swift"
-            timestampString = "559430404.35427"
+            filePath = "HackerNews/Controller/HackerNewsViewController.swift"
+            timestampString = "559467014.854372"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "35"
-            endingLineNumber = "35"
-            landmarkName = "getIndividualNews(newsIdArray:size:pageNo:completionHandler:)"
+            startingLineNumber = "129"
+            endingLineNumber = "129"
+            landmarkName = "refreshHackerTable()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -25,13 +25,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "HackerNews/APIService.swift"
-            timestampString = "559430404.354349"
+            filePath = "HackerNews/Controller/HackerNewsViewController.swift"
+            timestampString = "559467028.144183"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "54"
-            endingLineNumber = "54"
-            landmarkName = "getIndividualNews(newsIdArray:size:pageNo:completionHandler:)"
+            startingLineNumber = "125"
+            endingLineNumber = "125"
+            landmarkName = "refreshHackerTable()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

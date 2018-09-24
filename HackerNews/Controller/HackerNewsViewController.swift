@@ -13,6 +13,7 @@ let maxNumberOfNews = 30
 
 class HackerNewsViewController: UIViewController {
     
+    
     var isDataLoading:Bool=false
     var pageNo:Int=0
     var limit:Int=20
@@ -65,12 +66,12 @@ class HackerNewsViewController: UIViewController {
         APIService.sharedInstance.fetchNews(size: 30, pageNo: 0) { (sucess, storiesArray) in
             
             for (_, news) in storiesArray.enumerated(){
-                let id = NewsObject(id: news as? Int)
+                let id = NewsObject(id: news )
                 RealmService.shared.create(id)
 
             }
         
-            self.refreshHackerTable()
+            self.fetchHackerNews()
 
         }
         
@@ -97,7 +98,85 @@ class HackerNewsViewController: UIViewController {
         self.activityIndicator.widthAnchor.constraint(equalToConstant: 30).isActive = true
     }
     
-    @objc func refreshHackerTable() {
+    @objc func refreshHackerTable(){
+        
+        
+        hackerNewsTableView.setContentOffset(CGPoint(x: 0, y: hackerNewsTableView.contentOffset.y - 30), animated: false)
+
+        APIService.sharedInstance.fetchNews(size: 30, pageNo: 0) { (sucess, storiesArray) in
+            self.refreshControl.endRefreshing()
+            var newStoriesArray = [Any]()
+            
+            for newStory in storiesArray {
+                newStoriesArray.append(newStory)
+            }
+            
+            let realm = RealmService.shared.realm
+            let array = realm.objects(NewsObject.self)
+
+            var realmArray = [Int]()
+            
+            for obj in array {
+                realmArray.append(obj.id.value!)
+            }
+            
+            //let commonElements: Array = Set(storiesArray).filter(Set(realmArray).contains)
+            let output = Array(Set(storiesArray).subtracting(Set(realmArray)))
+
+            self.hackerNewsTableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+
+            if(output.count == 0){
+                return
+                
+            }
+            
+            else {
+               
+                APIService.sharedInstance.getIndividualNews(newsIdArray: output as NSArray, size: output.count, pageNo:0) { (success, news) in
+                    
+                    var indexPathArray = [IndexPath]()
+                    var  i = 0
+                    
+                    for obj in news {
+                        let indexPath = IndexPath(item: i, section: 0)
+                        indexPathArray.append(indexPath)
+                        self.latestNews.append(obj)
+                        i += 1
+                        
+                    }
+                    
+                    self.hackerNewsTableView.beginUpdates()
+                    self.hackerNewsTableView.insertRows(at: indexPathArray, with: .automatic)
+                    self.hackerNewsTableView.endUpdates()
+                    self.hackerNewsTableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+                    self.activityIndicator.stopAnimating()
+                    self.hackerNewsTableView.backgroundColor = UIColor.clear
+                    
+                    if (!success) {
+                        // Display error
+                        let alertView: UIAlertController = UIAlertController.init(title: "Error fetching news",
+                                                                                  message: "HackerNews Error.",
+                                                                                  preferredStyle: .alert)
+                        let dismissButton: UIAlertAction = UIAlertAction.init(title: "OK",
+                                                                              style: .default,
+                                                                              handler: nil)
+                        alertView.addAction(dismissButton)
+                        self.present(alertView, animated: true, completion: nil)
+                    }
+                    
+                }
+            }
+
+
+        
+            
+            
+        }
+    }
+    
+    
+    
+       func fetchHackerNews() {
         let realm = RealmService.shared.realm
         let array = realm.objects(NewsObject.self)
         
@@ -245,6 +324,8 @@ extension HackerNewsViewController:UIScrollViewDelegate {
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         
         print("scrollViewWillBeginDragging")
+        refreshControl.beginRefreshing()
+        self.refreshHackerTable()
         isDataLoading = false
     }
     
