@@ -120,7 +120,7 @@ class HackerNewsViewController: UIViewController {
 
         APIService.sharedInstance.fetchNews(size: 30, pageNo: 0) { (sucess, storiesArray) in
             self.refreshControl.endRefreshing()
-            var newStoriesArray = [Any]()
+            var newStoriesArray = [Int]()
             
             for newStory in storiesArray {
                 newStoriesArray.append(newStory)
@@ -136,7 +136,7 @@ class HackerNewsViewController: UIViewController {
             }
             
             //get unique id that are not present in realm database.
-            let uniqueStoriesArray = Array(Set(realmArray).subtracting(Set(storiesArray)))
+            let uniqueStoriesArray = Array(Set(newStoriesArray).subtracting(Set(realmArray)))
             if(self.isDataLoading == true){
                 self.hackerNewsTableView.contentInset = UIEdgeInsets(top: 0, left:0, bottom: 100, right: 0)
             }else {
