@@ -44,20 +44,20 @@ class HackerNewsViewController: UIViewController {
       
         self.navigationItem.title = "Top Stories"
         self.view.backgroundColor = UIColor.white
-        
+        refreshControl.addTarget(self, action: #selector(refreshHackerTable), for: .valueChanged)
+        refreshControl.tintColor = UIColor(red:0.25, green:0.72, blue:0.85, alpha:1.0)
+        refreshControl.attributedTitle = NSAttributedString(string: "Fetching Data ...", attributes: nil)
+        hackerNewsTableView.setContentOffset(CGPoint(x: 0, y: hackerNewsTableView.contentOffset.y - 30), animated: false)
+        hackerNewsTableView.refreshControl?.beginRefreshing()
+
         if #available(iOS 10.0, *) {
             hackerNewsTableView.refreshControl = refreshControl
         } else {
             hackerNewsTableView.addSubview(refreshControl)
         }
        
-        refreshControl.addTarget(self, action: #selector(refreshHackerTable), for: .valueChanged)
-    
-        refreshControl.tintColor = UIColor(red:0.25, green:0.72, blue:0.85, alpha:1.0)
-        refreshControl.attributedTitle = NSAttributedString(string: "Fetching Data ...", attributes: nil)
-        hackerNewsTableView.setContentOffset(CGPoint(x: 0, y: hackerNewsTableView.contentOffset.y - 30), animated: false)
-        hackerNewsTableView.refreshControl?.beginRefreshing()
         
+
         let realm = RealmService.shared.realm
         let array = realm.objects(NewsObject.self)
         
@@ -66,12 +66,11 @@ class HackerNewsViewController: UIViewController {
         }
       
         //fetch hot news when view is loaded
+        activityIndicator.startAnimating()
         APIService.sharedInstance.fetchNews(size: 30, pageNo: 0) { (sucess, storiesArray) in
-            
             for (_, news) in storiesArray.enumerated(){
                 let id = NewsObject(id: news )
                 RealmService.shared.create(id)
-
             }
         
             self.fetchHackerNews()
@@ -188,7 +187,8 @@ class HackerNewsViewController: UIViewController {
             APIService.sharedInstance.getIndividualNews(newsIdArray: idArray, size: 30, pageNo: self.pageNo) { (success, news) in
             
             var indexPathArray = [IndexPath]()
-            
+            self.activityIndicator.stopAnimating()
+
             for obj in news {
                 
                 let count = self.latestNews.count - 1
@@ -303,11 +303,6 @@ extension HackerNewsViewController:UITableViewDelegate,UITableViewDataSource {
 extension HackerNewsViewController:UIScrollViewDelegate {
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         
-        print("scrollViewWillBeginDragging")
-        print(hackerNewsTableView.contentInset)
-        print(hackerNewsTableView.contentOffset)
-        
-       
         isDataLoading = false
         
     }
@@ -318,12 +313,8 @@ extension HackerNewsViewController:UIScrollViewDelegate {
     //Pagination
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         
-        print("scrollViewDidEndDragging")
-        print("gggg:\(hackerNewsTableView.contentOffset)")
-        
         if(hackerNewsTableView.contentOffset.y < -100){
-            refreshControl.beginRefreshing()
-            self.refreshHackerTable()
+           // refreshControl.beginRefreshing()
         }
         if ((hackerNewsTableView.contentOffset.y + hackerNewsTableView.frame.size.height) >= hackerNewsTableView.contentSize.height + 100)
         {
@@ -341,4 +332,3 @@ extension HackerNewsViewController:UIScrollViewDelegate {
         }
     }
 }
-
