@@ -29,6 +29,7 @@
 		99DD177B2157F4CE004A596D /* RealmService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99DD177A2157F4CD004A596D /* RealmService.swift */; };
 		99DD177D21580025004A596D /* NewsObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99DD177C21580025004A596D /* NewsObject.swift */; };
 		99DD177F21582BBD004A596D /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99DD177E21582BBD004A596D /* LoginViewController.swift */; };
+		99DD17832158E60E004A596D /* HackerNewsWebviewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99DD17822158E60E004A596D /* HackerNewsWebviewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -79,6 +80,7 @@
 		99DD177A2157F4CD004A596D /* RealmService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmService.swift; sourceTree = "<group>"; };
 		99DD177C21580025004A596D /* NewsObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsObject.swift; sourceTree = "<group>"; };
 		99DD177E21582BBD004A596D /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		99DD17822158E60E004A596D /* HackerNewsWebviewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HackerNewsWebviewCell.swift; sourceTree = "<group>"; };
 		A379AA11EC87FD16FB55D4CE /* Pods-HackerNews.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HackerNews.release.xcconfig"; path = "Pods/Target Support Files/Pods-HackerNews/Pods-HackerNews.release.xcconfig"; sourceTree = "<group>"; };
 		B9128C5D4CEB3916D997C4AE /* Pods-HackerNewsUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HackerNewsUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-HackerNewsUITests/Pods-HackerNewsUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		D63D2AD9A75C8D667A2924A9 /* Pods-HackerNewsUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HackerNewsUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-HackerNewsUITests/Pods-HackerNewsUITests.release.xcconfig"; sourceTree = "<group>"; };
@@ -197,6 +199,7 @@
 				99069C0221562FAB00DE49C2 /* HackerNewsCell.swift */,
 				99DD177521577E0A004A596D /* DetailNewsHeaderView.swift */,
 				99DD177821579A94004A596D /* HotNewsCommentCell.swift */,
+				99DD17822158E60E004A596D /* HackerNewsWebviewCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -559,6 +562,7 @@
 				99069C07215685F200DE49C2 /* APIService.swift in Sources */,
 				99069BCD2154DA8600DE49C2 /* AppDelegate.swift in Sources */,
 				99DD177F21582BBD004A596D /* LoginViewController.swift in Sources */,
+				99DD17832158E60E004A596D /* HackerNewsWebviewCell.swift in Sources */,
 				99069C0D2156862700DE49C2 /* Comment.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

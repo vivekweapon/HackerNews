@@ -91,6 +91,14 @@ class DetailNewsHeaderView:UITableViewHeaderFooterView {
         return label
     }()
     
+    let selectionIndicator:UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = UIColor.white
+        return view
+    }()
+    
+    
     let commentsButton:UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -111,6 +119,7 @@ class DetailNewsHeaderView:UITableViewHeaderFooterView {
     
     func setup(){
         addSubview(bgView)
+        addSubview(selectionIndicator)
         bgView.addSubview(topicTitle)
         bgView.addSubview(urlLabel)
         bgView.addSubview(timeStampLabel)
@@ -147,9 +156,14 @@ class DetailNewsHeaderView:UITableViewHeaderFooterView {
         
         let window = UIApplication.shared.keyWindow!
 
-        commentsButton.bottomAnchor.constraint(equalTo: bgView.bottomAnchor).isActive = true
+        commentsButton.bottomAnchor.constraint(equalTo: selectionIndicator.topAnchor).isActive = true
         commentsButton.widthAnchor.constraint(equalToConstant: window.frame.size.width/2).isActive = true
         commentsButton.leadingAnchor.constraint(equalTo: bgView.leadingAnchor).isActive = true
+        
+        selectionIndicator.bottomAnchor.constraint(equalTo: bgView.bottomAnchor,constant:-3).isActive = true
+        selectionIndicator.widthAnchor.constraint(equalToConstant: (window.frame.size.width/2) - 10).isActive = true
+        selectionIndicator.heightAnchor.constraint(equalToConstant: 2).isActive = true
+        selectionIndicator.leadingAnchor.constraint(equalTo: bgView.leadingAnchor, constant:10).isActive = true
         
         articleButton.bottomAnchor.constraint(equalTo: bgView.bottomAnchor).isActive = true
         articleButton.widthAnchor.constraint(equalToConstant: window.frame.size.width/2).isActive = true
