@@ -23,7 +23,6 @@ class LoginViewController:UIViewController,GIDSignInUIDelegate{
         super.viewDidLoad()
         setupViews()
         GIDSignIn.sharedInstance().uiDelegate = self
-
     }
     
     func setupViews(){

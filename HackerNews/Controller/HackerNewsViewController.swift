@@ -41,6 +41,7 @@ class HackerNewsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+      
         self.navigationItem.title = "Top Stories"
         self.view.backgroundColor = UIColor.white
         
@@ -63,6 +64,7 @@ class HackerNewsViewController: UIViewController {
             RealmService.shared.delete(obj)
         }
       
+        //fetch hot news when view is loaded
         APIService.sharedInstance.fetchNews(size: 30, pageNo: 0) { (sucess, storiesArray) in
             
             for (_, news) in storiesArray.enumerated(){
@@ -124,8 +126,8 @@ class HackerNewsViewController: UIViewController {
                 newStoriesArray.append(newStory)
             }
             
-            let realm = RealmService.shared.realm
-            let array = realm.objects(NewsObject.self)
+            let realm = RealmService.shared.realm//realm object.
+            let array = realm.objects(NewsObject.self)//objects synced using already using realm.
 
             var realmArray = [Int]()
             
@@ -133,19 +135,20 @@ class HackerNewsViewController: UIViewController {
                 realmArray.append(obj.id.value!)
             }
             
-            //let commonElements: Array = Set(storiesArray).filter(Set(realmArray).contains)
-            let output = Array(Set(storiesArray).subtracting(Set(realmArray)))
+            
+            let uniqueStoriesArray = Array(Set(storiesArray).subtracting(Set(realmArray)))
 
             self.hackerNewsTableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
 
-            if(output.count == 0){
+            if(uniqueStoriesArray.count == 0){
                 return
                 
             }
             
             else {
                
-                APIService.sharedInstance.getIndividualNews(newsIdArray: output as NSArray, size: output.count, pageNo:0) { (success, news) in
+                //make an api call and get data only for unique ids present in result array.
+                APIService.sharedInstance.getIndividualNews(newsIdArray: uniqueStoriesArray as NSArray, size: uniqueStoriesArray.count, pageNo:0) { (success, news) in
                     
                     var indexPathArray = [IndexPath]()
                     var  i = 0
@@ -167,23 +170,10 @@ class HackerNewsViewController: UIViewController {
                     
                     if (!success) {
                         // Display error
-                        let alertView: UIAlertController = UIAlertController.init(title: "Error fetching news",
-                                                                                  message: "HackerNews Error.",
-                                                                                  preferredStyle: .alert)
-                        let dismissButton: UIAlertAction = UIAlertAction.init(title: "OK",
-                                                                              style: .default,
-                                                                              handler: nil)
-                        alertView.addAction(dismissButton)
-                        self.present(alertView, animated: true, completion: nil)
+                     self.displayAlert()
                     }
-                    
                 }
             }
-
-
-        
-            
-            
         }
     }
     
@@ -193,9 +183,7 @@ class HackerNewsViewController: UIViewController {
        
         let realm = RealmService.shared.realm
         let array = realm.objects(NewsObject.self)
-        
         var idArray:NSArray? = nil
-        
         var realmArray = [Any]()
         
         for obj in array {
@@ -206,8 +194,6 @@ class HackerNewsViewController: UIViewController {
         
         APIService.sharedInstance.getIndividualNews(newsIdArray: idArray!, size: 30, pageNo: self.pageNo) { (success, news) in
             
-            
-            
             var indexPathArray = [IndexPath]()
             
             for obj in news {
@@ -217,9 +203,7 @@ class HackerNewsViewController: UIViewController {
                 indexPathArray.append(indexPath)
                 self.latestNews.append(obj)
                 
-                
             }
-            
             
             self.hackerNewsTableView.beginUpdates()
             self.hackerNewsTableView.insertRows(at: indexPathArray, with: .automatic)
@@ -228,22 +212,10 @@ class HackerNewsViewController: UIViewController {
             self.activityIndicator.stopAnimating()
             self.hackerNewsTableView.backgroundColor = UIColor.clear
             
-            
-            
-            
-            
             if (!success) {
                 // Display error
-                let alertView: UIAlertController = UIAlertController.init(title: "Error fetching news",
-                                                                          message: "HackerNews Error.",
-                                                                          preferredStyle: .alert)
-                let dismissButton: UIAlertAction = UIAlertAction.init(title: "OK",
-                                                                      style: .default,
-                                                                      handler: nil)
-                alertView.addAction(dismissButton)
-                self.present(alertView, animated: true, completion: nil)
+                self.displayAlert()
             }
-            
         }
   
     }
@@ -266,8 +238,6 @@ class HackerNewsViewController: UIViewController {
         
         APIService.sharedInstance.getIndividualNews(newsIdArray: idArray!, size: 30, pageNo: self.pageNo) { (success, news) in
             
-         
-                
                 var indexPathArray = [IndexPath]()
                 
                 for obj in news {
@@ -277,34 +247,32 @@ class HackerNewsViewController: UIViewController {
                     indexPathArray.append(indexPath)
                     self.latestNews.append(obj)
                     
-                    
                 }
-                
-                
+            
                 self.hackerNewsTableView.beginUpdates()
                 self.hackerNewsTableView.insertRows(at: indexPathArray, with: .automatic)
                 self.hackerNewsTableView.endUpdates()
                 self.hackerNewsTableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
                 self.activityIndicator.stopAnimating()
                 self.hackerNewsTableView.backgroundColor = UIColor.clear
-                
-            
-            
-            
             
             if (!success) {
-                // Display error
-                let alertView: UIAlertController = UIAlertController.init(title: "Error fetching news",
-                                                                          message: "HackerNews Error.",
-                                                                          preferredStyle: .alert)
-                let dismissButton: UIAlertAction = UIAlertAction.init(title: "OK",
-                                                                      style: .default,
-                                                                      handler: nil)
-                alertView.addAction(dismissButton)
-                self.present(alertView, animated: true, completion: nil)
+               self.displayAlert()
             }
             
         }
+    }
+    
+    func displayAlert(){
+        // Display error
+        let alertView: UIAlertController = UIAlertController.init(title: "Error fetching news",
+                                                                  message: "HackerNews Error.",
+                                                                  preferredStyle: .alert)
+        let dismissButton: UIAlertAction = UIAlertAction.init(title: "OK",
+                                                              style: .default,
+                                                              handler: nil)
+        alertView.addAction(dismissButton)
+        self.present(alertView, animated: true, completion: nil)
     }
 
 }
